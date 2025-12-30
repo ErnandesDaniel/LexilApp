@@ -1,6 +1,7 @@
 'use client';
 import React, { Fragment, useCallback, useMemo } from 'react';
 import { useGetLevels } from "@/api/levels";
+import type { Level } from "@/api/dto";
 import '@/modules/levels/components/levels-list/index.scss';
 import clsx from 'clsx';
 import { MouseEvent as MouseEventType } from 'react';
@@ -15,17 +16,6 @@ import DeleteLevelConfirmationModal from "@/modules/levels/components/delete-lev
 
 const LevelsList = () => {
   const { data: levels, isLoading: isLoadingLevels } = useGetLevels();
-
-  const handleAddLevelClick = useCallback(() => {
-    setTrueOpenAddModal();
-  }, []);
-
-  const onClickDropdownStopPropagation = useCallback(
-    (e: MouseEventType<HTMLDivElement, MouseEvent>) => {
-      e.stopPropagation();
-    },
-    []
-  );
 
   const {
     setTrue: setTrueOpenDeleteModal,
@@ -48,6 +38,23 @@ const LevelsList = () => {
   const [selectedLevelId, setSelectedLevelId] = React.useState<string | undefined>();
   const [selectedLevelName, setSelectedLevelName] = React.useState<string | undefined>();
 
+  const [editInitialValues, setEditInitialValues] = React.useState<{
+    interval_minutes: number;
+    interval_hours: number;
+    interval_days: number;
+  }>();
+
+  const handleAddLevelClick = useCallback(() => {
+    setTrueOpenAddModal();
+  }, [setTrueOpenAddModal]);
+
+  const onClickDropdownStopPropagation = useCallback(
+    (e: MouseEventType<HTMLDivElement, MouseEvent>) => {
+      e.stopPropagation();
+    },
+    []
+  );
+
   const onOpenDeleteModal = useCallback<Exclude<MenuProps['onClick'], undefined>>(
     (event) => {
       event.domEvent.stopPropagation();
@@ -65,7 +72,6 @@ const LevelsList = () => {
       const level = levels?.find((l) => l.id === event.key);
       setSelectedLevelId(event.key);
       setEditInitialValues({
-        name: level?.name || '',
         interval_minutes: level?.interval_minutes || 0,
         interval_hours: level?.interval_hours || 0,
         interval_days: level?.interval_days || 0,
@@ -92,9 +98,7 @@ const LevelsList = () => {
     [onOpenEditModal, onOpenDeleteModal]
   );
 
-  const [editInitialValues, setEditInitialValues] = React.useState<any>();
-
-  const formatInterval = (level: any) => {
+  const formatInterval = (level: Level) => {
     const parts = [];
     if (level.interval_days) parts.push(`${level.interval_days} дн`);
     if (level.interval_hours) parts.push(`${level.interval_hours} час`);

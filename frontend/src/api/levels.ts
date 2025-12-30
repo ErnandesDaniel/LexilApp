@@ -38,7 +38,12 @@ const mockLevels = [
 ];
 
 type Level = typeof mockLevels[0];
-type CreateLevelRequest = Omit<Level, 'id' | 'user_id' | 'created_at' | 'updated_at'>;
+type CreateLevelRequest = {
+  interval_minutes: number;
+  interval_hours: number;
+  interval_days: number;
+  order?: number;
+};
 type UpdateLevelRequest = Partial<CreateLevelRequest>;
 
 // Mock API functions
@@ -49,8 +54,14 @@ const getLevels = async (): Promise<Level[]> => {
 
 const createLevel = async (data: CreateLevelRequest): Promise<Level> => {
   await new Promise(resolve => setTimeout(resolve, 1000));
+  const existingOrders = mockLevels.map(l => l.order);
+  const nextOrder = existingOrders.length > 0 ? Math.max(...existingOrders) + 1 : 1;
+  const order = data.order ?? nextOrder;
+  const name = `Уровень ${order}`;
   const newLevel: Level = {
     ...data,
+    order,
+    name,
     id: Math.random().toString(),
     user_id: 'user1',
     created_at: new Date().toISOString(),
@@ -64,7 +75,11 @@ const updateLevel = async (id: string, data: UpdateLevelRequest): Promise<Level>
   await new Promise(resolve => setTimeout(resolve, 1000));
   const index = mockLevels.findIndex(l => l.id === id);
   if (index !== -1) {
-    mockLevels[index] = { ...mockLevels[index], ...data, updated_at: new Date().toISOString() };
+    const updatedData = { ...data };
+    if (data.order !== undefined) {
+      updatedData.name = `Уровень ${data.order}`;
+    }
+    mockLevels[index] = { ...mockLevels[index], ...updatedData, updated_at: new Date().toISOString() };
     return mockLevels[index];
   }
   throw new Error('Level not found');

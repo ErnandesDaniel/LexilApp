@@ -1,17 +1,15 @@
-import { Form, Input, InputNumber, Modal } from "antd";
+import { Form, InputNumber, Modal } from "antd";
 import React, { DispatchWithoutAction, useCallback, useEffect, useMemo } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { getLevelsQueryKey, useCreateLevel, useUpdateLevel } from "@/api/levels";
 
 interface FormValues {
-  name: string;
   interval_minutes: number;
   interval_hours: number;
   interval_days: number;
 }
 
 const FORM_INITIAL_VALUES: FormValues = {
-  name: '',
   interval_minutes: 0,
   interval_hours: 0,
   interval_days: 0,
@@ -28,11 +26,10 @@ const AddEditLevelModal = ({ onClose, isOpen, levelId, initialValues }: AddEditL
 
   const [form] = Form.useForm<FormValues>();
 
-  const { interval_minutes, interval_hours, interval_days, name } = Form.useWatch(({ interval_minutes, interval_hours, interval_days, name }) => ({
+  const { interval_minutes, interval_hours, interval_days } = Form.useWatch(({ interval_minutes, interval_hours, interval_days }) => ({
     interval_minutes,
     interval_hours,
-    interval_days,
-    name
+    interval_days
   }), form) || FORM_INITIAL_VALUES;
 
   const { mutateAsync: createLevel, isPending: isPendingCreate } = useCreateLevel();
@@ -79,8 +76,8 @@ const AddEditLevelModal = ({ onClose, isOpen, levelId, initialValues }: AddEditL
   }, [isOpen, initialValues, form]);
 
   const modalButtonCommonProps = useMemo(() => ({
-    disabled: isPending || !name || (interval_minutes === 0 && interval_hours === 0 && interval_days === 0),
-  }), [name, interval_minutes, interval_hours, interval_days, isPending]);
+    disabled: isPending || (interval_minutes === 0 && interval_hours === 0 && interval_days === 0),
+  }), [interval_minutes, interval_hours, interval_days, isPending]);
 
   return (
     <Modal
@@ -96,14 +93,6 @@ const AddEditLevelModal = ({ onClose, isOpen, levelId, initialValues }: AddEditL
       cancelButtonProps={modalButtonCommonProps}
     >
       <Form form={form} initialValues={initialValues || FORM_INITIAL_VALUES}>
-        <Form.Item
-          name='name'
-          label='Название'
-          rules={[{ required: true, message: 'Введите название уровня' }]}
-        >
-          <Input placeholder="Например: Уровень 4" />
-        </Form.Item>
-
         <Form.Item label='Интервал'>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Form.Item name='interval_minutes' noStyle>
