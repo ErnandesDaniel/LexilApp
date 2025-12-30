@@ -1,8 +1,7 @@
 'use client';
 import React from 'react';
-import { Typography } from 'antd';
 import Link from 'next/link';
-import { Button } from 'antd';
+import { Button, Space, Typography } from 'antd';
 
 const { Title } = Typography;
 
@@ -19,12 +18,26 @@ export default function StudyPage() {
       <Title level={2} style={{ marginBottom: '40px' }}>
         Изучение новых слов
       </Title>
-      <p>Функционал для изучения новых слов будет добавлен позже.</p>
-      <Link href="/" passHref>
-        <Button type="primary" style={{ marginTop: '20px' }}>
-          Назад на главную
-        </Button>
-      </Link>
+      <p style={{ marginBottom: '30px', textAlign: 'center' }}>
+        Выберите режим изучения:
+      </p>
+      <Space direction="vertical" size="large" style={{ width: '350px' }}>
+        <Link href="/study/active" passHref>
+          <Button type="default" block size="large">
+            Активный словарь (с вводом)
+          </Button>
+        </Link>
+        <Link href="/study/passive" passHref>
+          <Button type="default" block size="large">
+            Пассивный словарь (карточки)
+          </Button>
+        </Link>
+        <Link href="/" passHref>
+          <Button style={{ marginTop: '20px' }}>
+            Назад на главную
+          </Button>
+        </Link>
+      </Space>
     </div>
   );
 }

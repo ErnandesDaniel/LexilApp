@@ -37,6 +37,9 @@ const mockLevels = [
   },
 ];
 
+// Study settings
+let studyWordCount = 10;
+
 type Level = typeof mockLevels[0];
 type CreateLevelRequest = {
   interval_minutes: number;
@@ -83,6 +86,12 @@ const updateLevel = async (id: string, data: UpdateLevelRequest): Promise<Level>
     return mockLevels[index];
   }
   throw new Error('Level not found');
+};
+
+// Study settings API
+export const getStudyWordCount = () => studyWordCount;
+export const setStudyWordCount = (count: number) => {
+  studyWordCount = count;
 };
 
 const deleteLevel = async (id: string): Promise<void> => {

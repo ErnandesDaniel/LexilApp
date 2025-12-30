@@ -1,7 +1,7 @@
-import { Form, InputNumber, Modal } from "antd";
+import { Form, InputNumber, Modal, Input } from "antd";
 import React, { DispatchWithoutAction, useCallback, useEffect, useMemo } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { getLevelsQueryKey, useCreateLevel, useUpdateLevel } from "@/api/levels";
+import { getLevelsQueryKey, useCreateLevel, useUpdateLevel, getStudyWordCount, setStudyWordCount } from "@/api/levels";
 
 interface FormValues {
   interval_minutes: number;
