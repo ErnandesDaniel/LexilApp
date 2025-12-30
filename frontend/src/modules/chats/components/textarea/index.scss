@@ -1,0 +1,61 @@
+.message_input_container {
+
+  padding-top: 16px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+
+  .message_input_area {
+    width: 100%;
+    padding: 12px;
+    border-width: 0px;
+    resize: none;
+    font-size: 18px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box; /* Include padding in width calculation */
+    overflow-y: auto; /* Enable vertical scrolling when content exceeds max-height */
+    &::placeholder {
+      color: #999;
+    }
+    font-family: Arial;
+  }
+
+
+  .message_input_action_bar {
+
+    display: grid;
+
+    padding: 16px;
+
+
+
+    .send_button {
+
+      justify-self: flex-end;
+
+      width: 48px; /* Increased by 1.5x from 32px */
+      height: 48px; /* Increased by 1.5x from 32px */
+      background-color: #f0f0f0;
+      color: #333;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 24px; /* Increased from 18px */
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover:not(:disabled) {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      &:disabled {
+        background-color: #e0e0e0;
+        cursor: not-allowed;
+        color: #999;
+      }
+    }
+  }
+}

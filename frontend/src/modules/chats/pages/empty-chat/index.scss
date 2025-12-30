@@ -1,0 +1,10 @@
+.empty_chat_page {
+  height:100%;
+  display: flex;
+
+  .message_input_container {
+    margin: auto;
+    max-width: 800px;
+    width: 100%;
+  }
+}

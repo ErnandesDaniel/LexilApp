@@ -1,0 +1,1 @@
+export {default} from '@/modules/chats/pages/chat/index';

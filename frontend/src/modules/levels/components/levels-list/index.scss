@@ -1,0 +1,59 @@
+.levels_items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .level_item {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    .level_info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .level_name {
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .level_interval {
+        font-size: 14px;
+        color: #666;
+      }
+    }
+
+    .menu_dots_container {
+      background: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 100%;
+      cursor: pointer;
+      display: none;
+      justify-content: center;
+      align-items: center;
+
+      .menu_dots {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .menu_dot {
+          width: 3px;
+          height: 3px;
+          border-radius: 50%;
+          background-color: #6c757d;
+        }
+      }
+    }
+
+    &:hover .menu_dots_container {
+      display: flex;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+.chats_layout {
+  display: flex;
+  height: 100vh;
+}
+
+.chat_content {
+  width: calc(100% - 300px);
+}
